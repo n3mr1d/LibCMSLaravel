@@ -19,5 +19,4 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-Volt::route('/test', 'settings.profile')->name('danwin.test');
 require __DIR__.'/auth.php';
