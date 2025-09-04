@@ -1,22 +1,26 @@
 <?php
 
-namespace App\Livewire\Actions;
+    namespace App\Livewire\Actions;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+    use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\Session;
 
-class Logout
-{
-    /**
-     * Log the current user out of the application.
-     */
-    public function __invoke()
+    class Logout
     {
-        Auth::guard('web')->logout();
+        /**
+         * Log the current user out of the application.
+         */
+        public function __invoke()
+        {
+            $user = Auth::user();
+            $user->last_login_at = now();
+            $user->save();
 
-        Session::invalidate();
-        Session::regenerateToken();
+            Auth::guard('web')->logout();
 
-        return redirect('/');
+            Session::invalidate();
+            Session::regenerateToken();
+
+            return redirect('/');
+        }
     }
-}
