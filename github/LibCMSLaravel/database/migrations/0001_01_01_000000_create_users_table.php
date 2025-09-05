@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('ip_address')->nullable();
             $table->string('user_agent')->nullable();
             $table->string('last_login_at')->nullable();
+            $table->boolean('is_online')->nullable();
             $table->enum('role', ['admin', 'guest'])->default('guest');
             $table->rememberToken();
             $table->timestamps();
