@@ -1,15 +1,17 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
+use Livewire\Volt\Component;
+use Livewire\Attributes\Title;
+use Livewire\Attributes\Layout;
+use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Livewire\Attributes\Layout;
-use Livewire\Volt\Component;
+use Illuminate\Auth\Events\Registered;
 
 new class extends Component {
     #[Layout('components.main-head')]
+    #[Title('Register')]
     public string $name = '';
     public string $username = '';
     public string $email = '';
