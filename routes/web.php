@@ -1,24 +1,26 @@
 <?php
 
-use App\Livewire\Settings\Appearance;
-use App\Livewire\Settings\Password;
-use App\Livewire\Settings\Profile;
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register;
+use App\Livewire\Auth\ResetPassword;
+use App\Livewire\Auth\ForgotPassword;
 use Illuminate\Support\Facades\Route;
+// welcome user
+Route::view('/', 'welcome.home')->name('home');
+Route::view('about', 'welcome.about')->name('about');
+Route::view('contact', 'welcome.contact')->name('contact');
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
-Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
-
-    Route::get('settings/profile', Profile::class)->name('settings.profile');
-    Route::get('settings/password', Password::class)->name('settings.password');
-    Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+// guest acces {login,regiester,reset-password, forget password}
+Route::middleware('guest')->group(function () {
+    Route::get('login', Login::class)->name('login');
+    Route::get('register', Register::class)->name('register');
+    Route::get('forgot-password', ForgotPassword::class)->name('password.request');
+    Route::get('reset-password/{token}', ResetPassword::class)->name('password.reset');
 });
 
-require __DIR__.'/auth.php';
+Route::post('logout', App\Livewire\Actions\Logout::class)
+    ->name('logout');
+
+
+require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
